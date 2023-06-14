@@ -38,8 +38,15 @@ public class Http11Processor implements Runnable, Processor {
      */
     @Override
     public void process(final Socket connection) {
+
+        // Try-with-resources
+        // try 에 자원 객체를 전달하면, try 코드 블록이 끝나면 자동으로 자원을 종료해주는 기능
+        // 이 코드에서는 bufferReader 가 자동으로 종료된다.
+
         try (final var inputStream = connection.getInputStream();
              final var outputStream = connection.getOutputStream();
+
+             // bufferReader 사용 이유
              final var bufferReader = new BufferedReader(new InputStreamReader(inputStream))) {
 
             HttpRequest httpRequest = HttpRequest.parse(readHttpRequest(bufferReader));
