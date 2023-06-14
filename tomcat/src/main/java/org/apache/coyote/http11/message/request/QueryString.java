@@ -22,7 +22,6 @@ public class QueryString {
         if (Objects.isNull(queryString) || queryString.isBlank()) {
             return;
         }
-
         parseQueryString(queryString);
     }
 

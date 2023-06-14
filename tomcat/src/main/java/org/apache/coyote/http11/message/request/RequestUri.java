@@ -5,17 +5,13 @@ import java.util.Optional;
 
 public class RequestUri {
 
-    private static final String SCHEME_HOST_PORT_REGEX = "http?://.*/";
-    private static final String QUERY_DELIMITER = "?";
+    private static final String FILE_EXTENSION_DELIMITER = ".";
+    private static final String EMPTY_STRING = "";
 
     private final URI uri;
 
-    public RequestUri(final String url) {
-        this.uri = URI.create(removeSchemeHostPort(url));
-    }
-
-    private String removeSchemeHostPort(final String url) {
-        return url.replaceAll(SCHEME_HOST_PORT_REGEX, "");
+    public RequestUri(final String uri) {
+        this.uri = URI.create(uri);
     }
 
     public Optional<String> getQuery(final String key) {
@@ -24,28 +20,22 @@ public class RequestUri {
         return queryString.getQuery(key);
     }
 
-    public String getPathWithoutQuery() {
-        return uri.getPath().split("\\?")[0];
+    public String getPath() {
+        return uri.getPath();
     }
 
     public String getExtension() {
-        String pathWithoutQuery = getPathWithoutQuery();
-        int lastIndexOfSlash = pathWithoutQuery.lastIndexOf("/");
-        String filename = pathWithoutQuery.substring(lastIndexOfSlash);
+        String path = getPath();
 
-        int lastDotIndex = filename.lastIndexOf(".");
+        int lastDotIndex = path.lastIndexOf(FILE_EXTENSION_DELIMITER);
         if (lastDotIndex < 0) {
-            return "";
+            return EMPTY_STRING;
         }
 
-        return filename.substring(lastDotIndex + 1);
+        return path.substring(lastDotIndex + 1);
     }
 
     public boolean hasExtension() {
         return !getExtension().isBlank();
-    }
-
-    public boolean matches(final String uri) {
-        return this.uri.getPath().equals(uri);
     }
 }
