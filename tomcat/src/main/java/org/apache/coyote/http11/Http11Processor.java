@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.util.Objects;
 import java.util.Optional;
 import nextstep.jwp.db.InMemoryUserRepository;
 import nextstep.jwp.exception.UncheckedServletException;
@@ -54,86 +55,75 @@ public class Http11Processor implements Runnable, Processor {
              final var bs = new BufferedReader(new InputStreamReader(is))) {
 
             HttpRequest request = generateHttpRequest(bs);
-            RequestUri requestUri = request.getRequestUri();
 
+            HttpResponse response = null;
             if (request.matches(GET, "/")) {
-                responseHelloWorld(os);
-                return;
+                response = generateHelloWorldResponse();
             }
 
             if (request.matches(GET, "/login")) {
-                responseLoginHtml(os, request);
-                return;
+                response = generateLoginHtmlResponse(request);
             }
 
             if (request.matches(POST, "/login")) {
-                loginUser(os, request);
-                return;
+                response = generateLoginUserResponse(request);
             }
 
             if (request.matches(GET, "/register")) {
-                responseRegisterHtml(os);
-                return;
+                response = generateRegisterHtmlResponse();
             }
 
             if (request.matches(POST, "/register")) {
-                registerUser(os, request);
-                return;
+                response = generateRegisterUserResponse(request);
             }
 
-            responseStaticFiles(os, requestUri);
+            if (Objects.isNull(response)) {
+                response = generateStaticFileResponse(request);
+            }
+
+            writeHttpResponse(os, response);
         } catch (IOException | UncheckedServletException e) {
             log.error(e.getMessage(), e);
         }
     }
 
-    private void responseHelloWorld(final OutputStream os) throws IOException {
-        HttpResponse httpResponse = new HttpResponse.Builder()
+    private HttpResponse generateHelloWorldResponse() {
+        return new HttpResponse.Builder()
                 .contentType(HTML)
                 .body("Hello world!")
                 .build();
-
-        writeHttpResponse(os, httpResponse);
     }
 
-    private void responseLoginHtml(final OutputStream os, final HttpRequest request) throws IOException {
+    private HttpResponse generateLoginHtmlResponse(final HttpRequest request) {
         Optional<String> cookie = request.getHttpHeaders().getHeader(COOKIE);
 
         if (cookie.isPresent()) {
-            HttpResponse httpResponse = new HttpResponse.Builder()
+            return new HttpResponse.Builder()
                     .contentType(HTML)
                     .body(StaticFileUtil.readFile("/index.html"))
                     .build();
-
-            writeHttpResponse(os, httpResponse);
-            return;
         }
 
-        HttpResponse httpResponse = new HttpResponse.Builder()
+        return new HttpResponse.Builder()
                 .contentType(HTML)
                 .body(StaticFileUtil.readFile("/login.html"))
                 .build();
-
-        writeHttpResponse(os, httpResponse);
     }
 
-    private void loginUser(final OutputStream os, final HttpRequest request) throws IOException {
-        QueryString queryString = new QueryString(request.getRequestBody());
+    private HttpResponse generateLoginUserResponse(final HttpRequest request) {
+        QueryString queryString = QueryString.parse(request.getRequestBody());
 
-        String account = queryString.getQuery("account").orElseThrow(InvalidRequestException::new);
-        String password = queryString.getQuery("password").orElseThrow(InvalidRequestException::new);
+        String account = queryString.getValues("account").orElseThrow(InvalidRequestException::new);
+        String password = queryString.getValues("password").orElseThrow(InvalidRequestException::new);
 
         Optional<User> user = InMemoryUserRepository.findByAccount(account)
                 .filter(it -> it.checkPassword(password));
 
         if (user.isEmpty()) {
-            HttpResponse response = new HttpResponse.Builder()
+            return new HttpResponse.Builder()
                     .status(FOUND)
                     .header(LOCATION, "/401.html")
                     .build();
-
-            writeHttpResponse(os, response);
-            return;
         }
 
         Session session = SessionManager.create();
@@ -145,47 +135,41 @@ public class Http11Processor implements Runnable, Processor {
             builder.setCookie(HttpCookie.sessionId(session.getId()));
         }
 
-        HttpResponse response = builder.build();
-        writeHttpResponse(os, response);
+        return builder.build();
     }
 
-    private void responseRegisterHtml(final OutputStream os) throws IOException {
-        HttpResponse response = new HttpResponse.Builder()
+    private HttpResponse generateRegisterHtmlResponse() {
+        return new HttpResponse.Builder()
                 .contentType(HTML)
                 .body(StaticFileUtil.readFile("/register.html"))
                 .build();
-
-        writeHttpResponse(os, response);
     }
 
-    private void registerUser(final OutputStream os, final HttpRequest request) throws IOException {
-        QueryString queryString = new QueryString(request.getRequestBody());
-        String account = queryString.getQuery("account").orElseThrow(InvalidRequestException::new);
-        String password = queryString.getQuery("password").orElseThrow(InvalidRequestException::new);
-        String email = queryString.getQuery("email").orElseThrow(InvalidRequestException::new);
+    private HttpResponse generateRegisterUserResponse(final HttpRequest request) {
+        QueryString queryString = QueryString.parse(request.getRequestBody());
+        String account = queryString.getValues("account").orElseThrow(InvalidRequestException::new);
+        String password = queryString.getValues("password").orElseThrow(InvalidRequestException::new);
+        String email = queryString.getValues("email").orElseThrow(InvalidRequestException::new);
 
         User user = new User(account, password, email);
         InMemoryUserRepository.save(user);
 
-        HttpResponse response = new HttpResponse.Builder()
+        return new HttpResponse.Builder()
                 .status(FOUND)
                 .header(LOCATION, "/index.html")
                 .build();
-
-        writeHttpResponse(os, response);
     }
 
-    private void responseStaticFiles(final OutputStream os, final RequestUri requestUri) throws IOException {
-        HttpResponse httpResponse = new HttpResponse.Builder()
+    private HttpResponse generateStaticFileResponse(final HttpRequest httpRequest) {
+        RequestUri requestUri = httpRequest.getRequestUri();
+        return new HttpResponse.Builder()
                 .contentType(requestUri.getExtension())
                 .body(StaticFileUtil.readFile(requestUri.getPath()))
                 .build();
-
-        writeHttpResponse(os, httpResponse);
     }
 
     private HttpRequest generateHttpRequest(final BufferedReader bs) throws IOException {
-        RequestLine requestLine = new RequestLine(bs.readLine());
+        RequestLine requestLine = RequestLine.parse(bs.readLine());
         HttpHeaders httpHeaders = generateHttpHeaders(bs);
         String body = generateHttpBody(bs, httpHeaders);
 
@@ -200,7 +184,7 @@ public class Http11Processor implements Runnable, Processor {
             requestHeaders.append(line).append("\r\n");
         }
 
-        return new HttpHeaders(requestHeaders.toString());
+        return HttpHeaders.parse(requestHeaders.toString());
     }
 
     private String generateHttpBody(final BufferedReader bs, final HttpHeaders httpHeaders) throws IOException {

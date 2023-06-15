@@ -4,7 +4,6 @@ import lombok.Getter;
 
 @Getter
 public enum HttpStatus {
-
     OK(200),
     CREATED(201),
     NO_CONTENT(204),
@@ -21,5 +20,9 @@ public enum HttpStatus {
 
     HttpStatus(final int code) {
         this.code = code;
+    }
+
+    public String getCodeAndPhrase() {
+        return code + " " + name();
     }
 }
