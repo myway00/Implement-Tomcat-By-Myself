@@ -16,6 +16,7 @@ public class StaticFileUtil {
     }
 
     public static String readFile(final String path) {
+
         ClassLoader classLoader = StaticFileUtil.class.getClassLoader();
         URL resource = classLoader.getResource(STATIC_DIRECTORY + path);
         if (Objects.isNull(resource)) {

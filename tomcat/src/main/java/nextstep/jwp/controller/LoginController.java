@@ -21,12 +21,17 @@ public class LoginController extends AbstractController {
 
     @Override
     protected HttpResponse handleGet(final HttpRequest request) {
+
         boolean jsessionidExists = request.getHttpHeaders().getHeader(COOKIE)
                 .map(HttpCookie::parse)
                 .map(it -> it.getValues("JSESSIONID"))
                 .isPresent();
 
         if (jsessionidExists) {
+            System.out.println(new HttpResponse.Builder()
+                    .contentType(HTML)
+                    .body(StaticFileUtil.readFile("/index.html"))
+                    .build().generateMessage() + " generate msg \n\n\n");
             return new HttpResponse.Builder()
                     .contentType(HTML)
                     .body(StaticFileUtil.readFile("/index.html"))

@@ -1,0 +1,216 @@
+[33mcommit 2caef80d7e361bdf5a9c822615cab9ab22c2c994[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m
+Author: myway00 <junior0614@naver.com>
+Date:   Thu Jun 15 12:53:43 2023 +0900
+
+    DELETE : getter
+
+[33mcommit 00051d4b343b17ae823c9b7e31804e653b08e347[m[33m ([m[1;31morigin/main[m[33m)[m
+Author: myway00 <junior0614@naver.com>
+Date:   Thu Jun 15 12:26:56 2023 +0900
+
+    #7 FIX : 그저 cookie 가 아닌 jsessioinid 쿠키 존재 시에만 index.html 접근 허용
+
+[33mcommit 735f109a3e6f8da038481c275fcdb1dca1962f4f[m
+Author: myway00 <junior0614@naver.com>
+Date:   Thu Jun 15 12:26:05 2023 +0900
+
+    #3, #8 ADD : Thread pool 갯수, 동시성 제어 자료구조 추가
+
+[33mcommit 08c46239ec23828145aa1fcb0a45740dbbd36966[m
+Author: myway00 <junior0614@naver.com>
+Date:   Thu Jun 15 12:17:41 2023 +0900
+
+    #2 ADD : Controller 을 통한 요청 처리
+
+[33mcommit 8b9b80b2b2c135b02a1b4dd59b522697abf6ddf4[m
+Author: myway00 <junior0614@naver.com>
+Date:   Thu Jun 15 12:06:26 2023 +0900
+
+    #7 FIX : Session 정보 저장 에러 수정
+
+[33mcommit 5a2057823769b791dbdf73738ea5d24ff19c686a[m
+Author: myway00 <junior0614@naver.com>
+Date:   Thu Jun 15 12:02:53 2023 +0900
+
+    Refactor
+
+[33mcommit a281ce2cccefe118036383c77251c4dea3adfa2d[m
+Author: myway00 <junior0614@naver.com>
+Date:   Thu Jun 15 11:47:22 2023 +0900
+
+    #7 REFACTOR : Set-cookie 는 로그인 요청 중 header 부재 시에만 생성
+
+[33mcommit ffcc7da284cebc7205b71f44fe51b7d03d150b98[m
+Merge: 7d6f1ca6 c853d356
+Author: myway00 <junior0614@naver.com>
+Date:   Thu Jun 15 11:32:40 2023 +0900
+
+    Merge branch 'main' of https://github.com/myway00/Implement-Tomcat-By-Myself
+
+[33mcommit 7d6f1ca602b006a4373ded4b84bd0d4f038eeed0[m
+Author: myway00 <junior0614@naver.com>
+Date:   Thu Jun 15 11:26:04 2023 +0900
+
+    #7 ADD : Tomcat session 관리 프로세스 추가  (session manager, cookie )
+
+[33mcommit c097b92a8d06aca5b608323b1c9483cb8da664bb[m
+Author: myway00 <junior0614@naver.com>
+Date:   Thu Jun 15 11:19:10 2023 +0900
+
+    #2 ADD : 유저 가입 기능
+
+[33mcommit c853d3562ba38c839c148e5b63d89da21934cdfa[m
+Author: Kim Dongyun <76711238+myway00@users.noreply.github.com>
+Date:   Thu Jun 15 11:13:30 2023 +0900
+
+    Update README.md
+
+[33mcommit 4b0ada4d8176e0c675ea6794e4a919122c0ddbc0[m
+Author: myway00 <junior0614@naver.com>
+Date:   Thu Jun 15 10:44:11 2023 +0900
+
+    #2 ADD : Request method & uri 일치 여부 check method
+
+[33mcommit c7fc61e2ab09ebd57c9f0470412049fc44109e76[m
+Author: myway00 <junior0614@naver.com>
+Date:   Thu Jun 15 10:37:59 2023 +0900
+
+    #2 REFACTOR : Util default constructor -> private
+
+[33mcommit 180f7ad6dae9eaa51e6a18aef9d1f76aaa7490fe[m
+Author: myway00 <junior0614@naver.com>
+Date:   Thu Jun 15 10:35:06 2023 +0900
+
+    #2 REFACTOR : 식별 용이함을 위한 메소드로 코드 분리
+
+[33mcommit 7a60b3efb02811848f90a58218b58ee954c34082[m
+Author: myway00 <junior0614@naver.com>
+Date:   Thu Jun 15 10:32:52 2023 +0900
+
+    #2 CHORE : 클래스 이름 변경
+
+[33mcommit 759386b1a545f01336a841e2c8771cdad1e17579[m
+Author: myway00 <junior0614@naver.com>
+Date:   Thu Jun 15 10:29:55 2023 +0900
+
+    #2 TEST : Test dependency 추가 & HTTP11 Processor test
+
+[33mcommit 2f14937e612c2de61c8361a2efc317e0eca42453[m
+Author: myway00 <junior0614@naver.com>
+Date:   Thu Jun 15 10:23:40 2023 +0900
+
+    #2 ADD : Login 결과 경우별 처리
+
+[33mcommit b28d5eaa30ada858b14b71df4a77091a8df61178[m
+Author: Kim Dongyun <76711238+myway00@users.noreply.github.com>
+Date:   Thu Jun 15 03:24:45 2023 +0900
+
+    Update README.md
+
+[33mcommit 3ce28b7b41226daac31fc66c71d2a7fe978acb3e[m
+Author: myway00 <junior0614@naver.com>
+Date:   Thu Jun 15 03:08:43 2023 +0900
+
+    #5 STUDY : BufferReader vs Stream
+
+[33mcommit 0b27c44a1c180f8d996a59bee6cf466dfb71b501[m
+Author: myway00 <junior0614@naver.com>
+Date:   Thu Jun 15 02:55:42 2023 +0900
+
+    #2 ADD : Http11Processor 구현
+
+[33mcommit 21e8be3f4b7e39a3fa55e8bdd5ef9d230990817b[m
+Author: myway00 <junior0614@naver.com>
+Date:   Thu Jun 15 02:03:30 2023 +0900
+
+    #2 REFACTOR : HttpRequest 코드 수정
+
+[33mcommit 40f08a4c737a668698fb54a51b53811adc95ee45[m
+Author: myway00 <junior0614@naver.com>
+Date:   Thu Jun 15 00:42:33 2023 +0900
+
+    #2 REFACTOR : Magic number, Default setting
+
+[33mcommit c832f03a8c5eddc4106a478b283c1d5bfbac1b4a[m
+Author: myway00 <junior0614@naver.com>
+Date:   Thu Jun 15 00:25:30 2023 +0900
+
+    #2 REFACTOR : Builder pattern
+
+[33mcommit eab72f72f1479e755a5568ee82188b4b3536af3e[m
+Author: myway00 <junior0614@naver.com>
+Date:   Thu Jun 15 00:15:47 2023 +0900
+
+    #2 ADD HTTP Response msg 생성 클래스
+
+[33mcommit c3833160ccbed9909f29eb9469e669c4662b2aad[m
+Author: myway00 <junior0614@naver.com>
+Date:   Thu Jun 15 00:13:08 2023 +0900
+
+    #2 ADD : HTTP Request 파싱 기능 (start line , uri, msg)
+
+[33mcommit 90ca6be38e3a9fdd9e65165964786c9e6970a70d[m
+Author: myway00 <junior0614@naver.com>
+Date:   Wed Jun 14 23:30:00 2023 +0900
+
+    #2 ADD : HTTP Header 파싱 기능
+
+[33mcommit 44cb687cb0b527deae51c1bb165a29693f54008f[m
+Author: myway00 <junior0614@naver.com>
+Date:   Wed Jun 14 20:36:52 2023 +0900
+
+    #2 ADD : (HTTP Reqquest)  QueryString 파싱 기능
+
+[33mcommit 351d75f06430aacca9f88ae9ca966d9570f93a7f[m
+Author: myway00 <junior0614@naver.com>
+Date:   Wed Jun 14 20:25:27 2023 +0900
+
+    #2 ADD : HTTP method, version, status code <enum> / HTTP Header <final>  / Content type <enum>
+
+[33mcommit b6084259d81151f3588e850f73f66489dca5d792[m
+Author: myway00 <junior0614@naver.com>
+Date:   Wed Jun 14 19:56:54 2023 +0900
+
+    #2 ADD : Static file 연관 exception 추가
+
+[33mcommit b631bc63929fa6d02f83d3afa609dbc9542756fb[m
+Author: myway00 <junior0614@naver.com>
+Date:   Wed Jun 14 19:50:48 2023 +0900
+
+    #2 ADD : Static file 반환 Util class
+
+[33mcommit 209b63cd0ff7ee337cc02b4150b40beb5cc100a3[m
+Author: myway00 <junior0614@naver.com>
+Date:   Wed Jun 14 19:43:48 2023 +0900
+
+    #2 ADD : Static file 반환 처리
+
+[33mcommit 0bd5145a71cb33e98e43e727d920d8d3b04b67f5[m
+Author: myway00 <junior0614@naver.com>
+Date:   Wed Jun 14 19:18:16 2023 +0900
+
+    #1 TEST : File, IoStream test code
+
+[33mcommit 88a40755cb95ded3a7c27e14b01e6f41555f990c[m
+Author: kang-hyungu <hkkang@woowahan.com>
+Date:   Mon Aug 29 14:06:41 2022 +0900
+
+    root project name 수정
+
+[33mcommit 5f29e24d36f4f003f3a18a32ae784c7e4bc52463[m
+Author: kang-hyungu <hkkang@woowahan.com>
+Date:   Mon Aug 29 14:05:37 2022 +0900
+
+    github action 제거
+
+[33mcommit 923162f39530a48ccd0e46d3d5cf60dc401e70ca[m
+Author: kang-hyungu <hkkang@woowahan.com>
+Date:   Mon Aug 29 14:01:57 2022 +0900
+
+    톰캣 구현하기
+
+[33mcommit 5fd108258640d3a8b80d7314d6e6cd6921b2db6e[m
+Author: KangHyunGu <hkkang@woowahan.com>
+Date:   Fri Aug 20 13:52:14 2021 +0900
+
+    first commit
