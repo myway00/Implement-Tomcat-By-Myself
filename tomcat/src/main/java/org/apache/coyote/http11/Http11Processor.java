@@ -12,6 +12,7 @@ import org.apache.coyote.http11.message.common.ContentType;
 import org.apache.coyote.http11.message.request.HttpRequest;
 import org.apache.coyote.http11.message.request.RequestUri;
 import org.apache.coyote.http11.message.response.HttpResponse;
+import org.apache.coyote.http11.message.response.HttpStatus;
 import org.apache.coyote.http11.util.StaticFileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,21 +33,10 @@ public class Http11Processor implements Runnable, Processor {
         process(connection);
     }
 
-    /**
-     * Connector 로부터 받은 Socket 의 InputStream 을 읽고 데이터를 처리한 후
-     * OutputStream 에 데이터를 담아 클라이언트에게 전달
-     */
     @Override
     public void process(final Socket connection) {
-
-        // Try-with-resources
-        // try 에 자원 객체를 전달하면, try 코드 블록이 끝나면 자동으로 자원을 종료해주는 기능
-        // 이 코드에서는 bufferReader 가 자동으로 종료된다.
-
         try (final var inputStream = connection.getInputStream();
              final var outputStream = connection.getOutputStream();
-
-             // bufferReader 사용 이유
              final var bufferReader = new BufferedReader(new InputStreamReader(inputStream))) {
 
             HttpRequest httpRequest = HttpRequest.parse(readHttpRequest(bufferReader));
@@ -74,16 +64,27 @@ public class Http11Processor implements Runnable, Processor {
                 String account = requestUri.getQuery("account").orElse("");
                 String password = requestUri.getQuery("password").orElse("");
 
-                InMemoryUserRepository.findByAccount(account)
+                boolean loginSuccess = InMemoryUserRepository.findByAccount(account)
                         .filter(user -> user.checkPassword(password))
-                        .ifPresentOrElse(System.out::println, () -> System.out.println("유저가 없습니다."));
+                        .isPresent();
 
-                HttpResponse httpResponse = new HttpResponse.Builder()
-                        .contentType(ContentType.HTML)
-                        .body(StaticFileUtil.readFile("/login.html"))
-                        .build();
+                if (loginSuccess) {
+                    HttpResponse httpResponse = new HttpResponse.Builder()
+                            .status(HttpStatus.FOUND)
+                            .header("Location", "/index.html")
+                            .build();
 
-                writeHttpResponse(outputStream, httpResponse);
+                    writeHttpResponse(outputStream, httpResponse);
+                }
+
+                if (!loginSuccess) {
+                    HttpResponse httpResponse = new HttpResponse.Builder()
+                            .status(HttpStatus.FOUND)
+                            .header("Location", "/401.html")
+                            .build();
+
+                    writeHttpResponse(outputStream, httpResponse);
+                }
             }
         } catch (IOException | UncheckedServletException e) {
             log.error(e.getMessage(), e);
