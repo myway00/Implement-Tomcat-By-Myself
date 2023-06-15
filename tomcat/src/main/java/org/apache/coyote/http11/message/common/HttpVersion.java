@@ -1,8 +1,9 @@
 package org.apache.coyote.http11.message.common;
 
+import lombok.Getter;
+
 import java.util.Arrays;
 import java.util.NoSuchElementException;
-import lombok.Getter;
 
 @Getter
 public enum HttpVersion {
@@ -24,4 +25,5 @@ public enum HttpVersion {
                 .findFirst()
                 .orElseThrow(NoSuchElementException::new);
     }
+
 }

@@ -1,10 +1,11 @@
 package org.apache.coyote.http11.session;
 
+import lombok.Getter;
+import lombok.ToString;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import lombok.Getter;
-import lombok.ToString;
 
 @ToString
 public class Session {

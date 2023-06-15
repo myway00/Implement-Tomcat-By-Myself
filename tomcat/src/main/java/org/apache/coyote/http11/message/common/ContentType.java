@@ -1,7 +1,8 @@
 package org.apache.coyote.http11.message.common;
 
-import java.util.Arrays;
 import lombok.Getter;
+
+import java.util.Arrays;
 
 @Getter
 public enum ContentType {
@@ -25,4 +26,5 @@ public enum ContentType {
                 .findFirst()
                 .orElse(PLAINTEXT);
     }
+
 }
