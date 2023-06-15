@@ -3,6 +3,7 @@ package org.apache.coyote.http11.message.request;
 import lombok.Getter;
 import lombok.ToString;
 import org.apache.coyote.http11.message.common.HttpHeaders;
+import org.apache.coyote.http11.message.common.HttpMethod;
 
 @ToString
 @Getter
@@ -50,6 +51,19 @@ public class HttpRequest {
     private static String parseBody(final String message) {
         int bodyStartIndex = message.indexOf(BODY_SEPARATOR);
         return message.substring(bodyStartIndex);
+    }
+
+    /**
+     * 요청 메소드와 URI 가 일치 여부 검사하는 메소드
+     * @param method
+     * @param uri
+     * @return
+     */
+    public boolean matches(final HttpMethod method, final String uri) {
+        boolean methodMatches = requestLine.getMethod().equals(method);
+        boolean uriMatches = requestLine.getRequestUri().matches(uri);
+
+        return methodMatches && uriMatches;
     }
 
     public RequestUri getRequestUri() {
