@@ -18,8 +18,7 @@ public class HttpRequest {
     private final HttpHeaders httpHeaders;
     private final String requestBody;
 
-    private HttpRequest(final RequestLine requestLine, final HttpHeaders httpHeaders,
-                        final String requestBody) {
+    public HttpRequest(final RequestLine requestLine, final HttpHeaders httpHeaders, final String requestBody) {
         this.requestLine = requestLine;
         this.httpHeaders = httpHeaders;
         this.requestBody = requestBody;
@@ -53,17 +52,15 @@ public class HttpRequest {
         return message.substring(bodyStartIndex);
     }
 
-    /**
-     * 요청 메소드와 URI 가 일치 여부 검사하는 메소드
-     * @param method
-     * @param uri
-     * @return
-     */
     public boolean matches(final HttpMethod method, final String uri) {
         boolean methodMatches = requestLine.getMethod().equals(method);
         boolean uriMatches = requestLine.getRequestUri().matches(uri);
 
         return methodMatches && uriMatches;
+    }
+
+    public boolean hasQuery() {
+        return requestLine.hasQuery();
     }
 
     public RequestUri getRequestUri() {

@@ -9,6 +9,7 @@ import org.apache.coyote.http11.message.common.HttpMethod;
 public class RequestLine {
 
     private static final String START_LINE_DELIMITER = " ";
+
     private static final int METHOD_INDEX = 0;
     private static final int REQUEST_URI_INDEX = 1;
     private static final int VERSION_INDEX = 2;
@@ -22,5 +23,10 @@ public class RequestLine {
         this.method = HttpMethod.from(splitRequestLine[METHOD_INDEX]);
         this.requestUri = new RequestUri(splitRequestLine[REQUEST_URI_INDEX]);
         this.version = splitRequestLine[VERSION_INDEX];
+    }
+
+    // 쿼리 존재 여부 메소드
+    public boolean hasQuery() {
+        return requestUri.hasQuery();
     }
 }
