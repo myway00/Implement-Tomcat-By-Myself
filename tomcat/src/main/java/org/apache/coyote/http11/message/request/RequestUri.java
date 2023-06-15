@@ -1,6 +1,7 @@
 package org.apache.coyote.http11.message.request;
 
 import java.net.URI;
+import java.util.Objects;
 import java.util.Optional;
 
 public class RequestUri {
@@ -37,6 +38,12 @@ public class RequestUri {
 
     public boolean hasExtension() {
         return !getExtension().isBlank();
+    }
+
+    // 쿼리 존재 여부 메소드
+    public boolean hasQuery() {
+        String query = uri.getQuery();
+        return !(Objects.isNull(query) || query.isBlank());
     }
 
     public boolean matches(final String uri) {
