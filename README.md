@@ -1,6 +1,9 @@
 # 톰캣 구현하기
 
-- 작업한 코드 부분은 []() & []() 입니다.
+- 작업한 코드 부분
+   - 1) `tomcat/src/main/java/org/apache` (catalina, coyote) 
+   - 2) `tomcat/src/main/java/nextstep/jwp/controller` (controller)
+
 
 ## 작업 개요 
 > 아래 사항들이 도저히 감이 잡히지 않고, 서버 개발자로서 이 부분에 대해 숙지해야, 서버 이상 시 점검 가능 역량 쌓을 수 있다고 판단
@@ -8,14 +11,16 @@
 - TCP Socket을 통해 socket의 buffer에 I/O로 들어온 데이터 처리하는 과정
 - Thread를 관리하는 과정 (어떻게 Multithread 로 구동되는가)
 _________________________________________________________________________
-## 기능 요구사항
-- [ ] GET /login 요청에 로그인 페이지를 보여준다.
-- [ ] GET /register 요청에 회원가입 페이지를 보여준다.
-- [ ] POST /register , body를 포함한 요청에 회원가입을 시키고 login 페이지로 redirect 시킨다.
-- [ ] POST /login 요청에 로그인 처리를 한다.
-   - [ ]  서버에서 세션을 생성해 로그인 정보를 저장한다.
-   - [ ]  쿠키에 JSESSION 아이디를 담아서 로그인을 유지시킨다.
-- [ ] 로그인 처리가 된 사용자에게는 index.html 페이지를 보여준다.
+## 기능 구현사항
+
+http://localhost:8080/index.html 페이지에 접근 가능하다.
+접근한 페이지의 js, css 파일을 불러온다.
+uri의 QueryString을 파싱한다.
+HTTP 요청의 Request 를 파싱한다.
+로그인에 성공하면 HTTP Reponse의 헤더에 Set-Cookie가 존재한다.
+서버에 세션을 관리하는 클래스가 있고, 쿠키로부터 전달 받은 JSESSIONID 값이 저장된다.
+HTTP Request, HTTP Response 클래스로 나눠서 구현한다.
+Controller 인터페이스와 RequestMapping 클래스를 활용하여 if절을 제거한다.
 _________________________________________________________________________
 
 ## 프로세스 
