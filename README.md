@@ -1,6 +1,9 @@
 # 톰캣 구현하기
 
-- 작업한 코드 부분은 []() & []() 입니다.
+- 작업한 코드 부분
+   - 1) `tomcat/src/main/java/org/apache` (catalina, coyote) 
+   - 2) `tomcat/src/main/java/nextstep/jwp/controller` (controller)
+
 
 ## 작업 개요 
 > 아래 사항들이 도저히 감이 잡히지 않고, 서버 개발자로서 이 부분에 대해 숙지해야, 서버 이상 시 점검 가능 역량 쌓을 수 있다고 판단
