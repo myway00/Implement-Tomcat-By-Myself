@@ -49,3 +49,7 @@ ____________________________________________________________________________
 
 ## Http11Processor
 - Connector로부터 받은 Socket의 InputStream을 읽고 데이터를 처리한 후 OutputStream에 데이터를 담아 클라이언트에게 전달합니다.
+
+## 초기 코드 레포지토리 
+https://github.com/woowacourse/jwp-dashboard-http
+- 해당 레포지토리의 템플릿을 기반으로 작성했습니다. 
